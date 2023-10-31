@@ -216,7 +216,7 @@ def call_model(query, model_type, hide_source):
     embeddings = HuggingFaceEmbeddings(model_name=embeddings_model_name)
     
     db = Chroma(persist_directory=persist_directory, embedding_function=embeddings, client_settings=CHROMA_SETTINGS)
-
+    querywithprompt = "You are a tutor and you have been asked the following question: " + query
     print(f"Ingestion complete! You can now run privateGPT.py to query your documents")
     #callbacks = [] if args.mute_stream else [StreamingStdOutCallbackHandler()]
     
@@ -256,7 +256,7 @@ def call_model(query, model_type, hide_source):
 
     # Get the answer from the chain
     start = time.time()
-    res = qa(query)
+    res = qa(querywithprompt)
     answer, docs = res['result'], [] if hide_source else res['source_documents']
     end = time.time()
 
