@@ -216,7 +216,22 @@ def call_model(query, model_type, hide_source):
     embeddings = HuggingFaceEmbeddings(model_name=embeddings_model_name)
     
     db = Chroma(persist_directory=persist_directory, embedding_function=embeddings, client_settings=CHROMA_SETTINGS)
-    querywithprompt = "You are a tutor and you have been asked the following question: " + query
+    querywithprompt = """I want you to ANSWER a QUESTION based on the following pieces of CONTEXT. 
+
+        If you don't know the answer, just say that you don't know, don't try to make up an answer.
+
+        Your ANSWER should be analytical and straightforward. 
+        Try to share deep, thoughtful insights and explain complex ideas in a simple and concise manner. 
+        When appropriate use analogies and metaphors to illustrate your point. 
+        Your ANSWER should have a strong focus on clarity, logic, and brevity.
+        Your ANSWER should be truthful and correct according to the given SOURCES
+
+        CONTEXT: You are helping students prepare for an exam about Big Data and Cloud technology. 
+
+        QUESTION: """ + query + """
+
+        ANSWER:
+        """
     print(f"Ingestion complete! You can now run privateGPT.py to query your documents")
     #callbacks = [] if args.mute_stream else [StreamingStdOutCallbackHandler()]
     
