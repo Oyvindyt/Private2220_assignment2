@@ -44,7 +44,7 @@ from langchain.docstore.document import Document
 load_dotenv()
 
 embeddings_model_name = 'all-MiniLM-L6-v2'#os.environ.get("EMBEDDINGS_MODEL_NAME")
-persist_directory = 'data/privateGPTpp/db'#os.environ.get('PERSIST_DIRECTORY')
+persist_directory = 'data/Private2220_assignment2/db'#os.environ.get('PERSIST_DIRECTORY')
 
 
 model_n_batch = 8
@@ -53,7 +53,7 @@ model_n_ctx = 2000
 
 # Load environment variables
 #persist_directory = os.environ.get('PERSIST_DIRECTORY')
-source_directory = r'/data/privateGPTpp/source_documents'
+source_directory = r'/data/Private2220_assignment2/source_documents'
 #embeddings_model_name = os.environ.get('EMBEDDINGS_MODEL_NAME')
 chunk_size = 500
 chunk_overlap = 50
@@ -320,7 +320,7 @@ def upload():
     '''os.chdir(source_directory)
     with open(filename, "w") as f:
         f.write(file)'''
-    file.save('/data/privateGPTpp/source_documents/' +(file.filename))
+    file.save('/data/Private2220_assignment2/source_documents/' +(file.filename))
     ingest()
     
     # Return a message to the json file
@@ -345,14 +345,14 @@ def predict():
     if not os.listdir(source_directory):
         print("Source directory is empty. Please upload a file first.")
     
-    answer, sources = call_model(text, model_type, hide_source=False)
+    answer, sources = call_model(text, model_type, hide_source=True)
     print(sources)
     # From each of the elements in the sources list, split the string at the first colon
     sources = [source.split(":", 1) for source in sources]
     # Concatenate the sources list to a string
     sources = '\n\n'.join([source[1] for source in sources])
     # Concatenate the sources string to the answer string and add Source: to the beginning of the sources string
-    answer = answer + '\n\nSources :\n\n' + sources
+    answer = answer
     # Return the answer and sources as a dict which can be read in json format in javascript
     return {'answer': answer}
 
