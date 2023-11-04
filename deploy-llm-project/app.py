@@ -242,8 +242,8 @@ def call_model(query, model_type, hide_source):
     The difficulty of the MULTIPLE CHOICE QUESTIONS should be easy, medium and hard. 
 
     TOPIC:
-    """ + query + 
-    """MULTIPLE CHOICE QUESTIONS: 
+    """ + query + """
+    MULTIPLE CHOICE QUESTIONS: 
     """
 
     print(f"Ingestion complete! You can now run privateGPT.py to query your documents")
