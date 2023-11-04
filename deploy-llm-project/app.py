@@ -234,13 +234,16 @@ def call_model(query, model_type, hide_source):
         ANSWER:
         """
 
-    xChoiceprompt = """I want you to generate five MULTIPLE CHOICE QUESTIONS on the topic specified by the user. 
-    
-    The difficulty of the MULTIPLE CHOICE QUESTIONS should be EASY, MEDIUM and HARD. 
+    xChoiceprompt = """I want you to generate five MULTIPLE CHOICE QUESTIONS based on the TOPIC specified by the user. 
 
-    Topic:
+    The MULTIPLE CHOICE QUESTIONS should have three possible answers, a, b and c. One of the answers should be correct, 
+    and two should be incorrect. It should be random which answer, a, b or c, should be the correct answer.
+    
+    The difficulty of the MULTIPLE CHOICE QUESTIONS should be easy, medium and hard. 
+
+    TOPIC:
     """ + query + 
-    """Question 1: 
+    """MULTIPLE CHOICE QUESTIONS: 
     """
 
     print(f"Ingestion complete! You can now run privateGPT.py to query your documents")
