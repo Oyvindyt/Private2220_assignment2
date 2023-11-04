@@ -233,6 +233,16 @@ def call_model(query, model_type, hide_source):
 
         ANSWER:
         """
+
+    xChoiceprompt = """I want you to generate five MULTIPLE CHOICE QUESTIONS on the topic specified by the user. 
+    
+    The difficulty of the MULTIPLE CHOICE QUESTIONS should be EASY, MEDIUM and HARD. 
+
+    Topic:
+    """ + query + 
+    """Question 1: 
+    """
+
     print(f"Ingestion complete! You can now run privateGPT.py to query your documents")
     #callbacks = [] if args.mute_stream else [StreamingStdOutCallbackHandler()]
     
@@ -272,7 +282,7 @@ def call_model(query, model_type, hide_source):
 
     # Get the answer from the chain
     start = time.time()
-    res = qa(querywithprompt)
+    res = qa(xChoiceprompt)
     answer, docs = res['result'], [] if hide_source else res['source_documents']
     end = time.time()
 
