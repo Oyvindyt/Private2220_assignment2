@@ -370,11 +370,6 @@
             <select id="model">
                 <option value="GPT4All">GPT4All</option>
                 <option value="LlamaCpp" selected>LlamaCpp</option>
-                <option value="MedLlama">MedLlama</option>
-                <option value="phi">phi</option>
-                <option value="codegeex2">codegeex2</option>
-                <option value="codellama">codellama</option>
-                <option value="vicuna">vicuna</option>
             </select>
         </div>
         <div>
@@ -397,6 +392,12 @@
                 <option value="100500">All</option>
             </select>
         </div>
+    	<div>
+	     <label for="questiontype" title="Select whether you would like to ask a question or if you would like multiplechoice questions">Question type:</label>
+             <select id="questiontype">
+                <option value="question" selected>Question</option>
+                <option value="mchoice">Mutiple Choice</option>
+            </select>
     </div>
 
 </div>
@@ -414,6 +415,7 @@
         let temperature = 1;
         let maxTokens = 200;
         let contextStrategy = 10;
+        let questionType = "question"
 
         // prompt to OpenAI API interaction logic
 
@@ -450,6 +452,7 @@
                 },
                 body: JSON.stringify({
                     prompt: prompt,
+                    questiontype: questionType,
                     model: selectedModel,
                     messages,
                     //temperature: temperature,
@@ -663,6 +666,11 @@
         const modelSelectbox = document.getElementById("model");
         modelSelectbox.addEventListener("change", () => {
             selectedModel = modelSelectbox.value;
+        });
+
+        const questionSelectbox = document.getElementById("questiontype");
+        questionSelectbox.addEventListener("change", () => {
+            questionType = questionSelectbox.value;
         });
 
         const temperatureInput = document.getElementById("temperature");
