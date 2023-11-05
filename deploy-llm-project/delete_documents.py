@@ -2,8 +2,8 @@ import os
 import time
 import shutil
 
-dir_path = "/data/privateGPTpp/source_documents/"
-db_path = "/data/privateGPTpp/db"
+dir_path = "/data/Private2220_assignment2/source_documents/"
+db_path = "/data/Private2220_assignment2/db"
 
 if os.listdir(dir_path):
     print("Directory is not empty. Deleting contents in 5 minutes...")
