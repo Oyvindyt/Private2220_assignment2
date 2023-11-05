@@ -210,13 +210,12 @@ def calculate_layer_count() -> int | None:
     else:
         return (get_gpu_memory()//LAYER_SIZE_MB-LAYERS_TO_REDUCE)
 
-def call_model(query, model_type, hide_source):
+def call_model(query, model_type, questiontype, hide_source):
     # Parse the command line arguments
     #args = parse_arguments()
     embeddings = HuggingFaceEmbeddings(model_name=embeddings_model_name)
     
     db = Chroma(persist_directory=persist_directory, embedding_function=embeddings, client_settings=CHROMA_SETTINGS)
-    # From https://github.com/steamship-packages/ask-my-course/blob/main/prompts.py fetched 04.11.2023
     querywithprompt = """I want you to ANSWER a QUESTION based on the following pieces of CONTEXT. 
 
         If you don't know the answer, just say that you don't know, don't try to make up an answer.
@@ -285,7 +284,10 @@ def call_model(query, model_type, hide_source):
 
     # Get the answer from the chain
     start = time.time()
-    res = qa(xChoiceprompt)
+    
+    res = qa(querywithprompt)
+    if questiontype == "mchoice":
+        res = qa(xChoiceprompt)
     answer, docs = res['result'], [] if hide_source else res['source_documents']
     end = time.time()
 
@@ -352,6 +354,7 @@ def predict():
     #text = data['input']
     # Select model from drop down list of index.html
     model_type = data['model']
+    question_type = data['questiontype']
     print(text)
     print(model_type)
     
@@ -359,7 +362,7 @@ def predict():
     if not os.listdir(source_directory):
         print("Source directory is empty. Please upload a file first.")
     
-    answer, sources = call_model(text, model_type, hide_source=True)
+    answer, sources = call_model(text, model_type, question_type, hide_source=True)
     print(sources)
     # From each of the elements in the sources list, split the string at the first colon
     sources = [source.split(":", 1) for source in sources]
