@@ -10,322 +10,323 @@
     <meta name="author" content="Krivich (https://github.com/Krivich)">
     <title>GPT-Over-API ChatGPT Client</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            height: 100vh;
-            background-color: #fff;
-        }
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        height: 100vh;
+        background-color: #252525;
+        font-family: Arial, sans-serif;
+    }
 
-        textarea,
-        select,
-        input {
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 8px;
-            transition: border-color 0.3s ease-in-out;
-        }
+    textarea,
+    select,
+    input {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 8px;
+        transition: border-color 0.3s ease-in-out;
+    }
 
-        textarea:focus,
-        select:focus,
-        input:focus {
-            outline: none;
-            border-color: #1E90FF;
-        }
+    textarea:focus,
+    select:focus,
+    input:focus {
+        outline: none;
+        border-color: #007bff;
+    }
 
-        .left {
-            display: flex;
-            flex-direction: column;
-            width: 250px;
-            background-color: rgb(32, 33, 35);
-            color: #fff;
-            padding: 20px;
-        }
+    .left {
+        display: flex;
+        flex-direction: column;
+        width: 250px;
+        background-color: #202123;
+        color: #fff;
+        padding: 20px;
+    }
 
+    #chat-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
 
-        #chat-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-        }
+    .chat-list-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+    }
 
-        .chat-list-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            padding: 10px;
-            transition: background-color 0.3s ease;
-        }
+    .chat-list-item:hover {
+        background-color: #2a2a2a;
+    }
 
-        .chat-list-item:hover {
-            background-color: rgb(42, 42, 42);
-        }
+    .chat-list-item-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-right: 10px;
+        flex: 1;
+    }
 
-        .chat-list-item-name {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            margin-right: 10px;
-            flex: 1;
-        }
+    .chat-list-item-delete {
+        font-size: 20px;
+        color: #ccc;
+        cursor: pointer;
+        margin-left: auto;
+        border: none;
+        background-color: transparent;
+        padding: 0;
+    }
 
-        .chat-list-item-delete {
-            font-size: 20px;
-            color: #ccc;
-            cursor: pointer;
-            margin-left: auto;
-            border: none;
-            background-color: transparent;
-            padding: 0;
-        }
+    .new-chat-button {
+        margin-bottom: 20px;
+        background-color: #4285f4;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-        .new-chat-button {
-            margin-bottom: 20px;
-            background-color: rgb(66, 133, 244);
-            color: #fff;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    .token-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        background-color: #202123;
+        color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+    }
 
-        .token-panel {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background-color: rgb(32, 33, 35);
-            color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-        }
+    .token-label {
+        margin-bottom: 10px;
+    }
 
-        .token-label {
-            margin-bottom: 10px;
-        }
+    .token-input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
 
-        .token-input {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
+    .token-label a {
+        color: #fff;
+    }
 
-        .token-label a {
-            color: #fff;
-        }
+    .scroll-container {
+        overflow-y: auto;
+        max-height: calc(100vh - 200px);
+    }
 
-        .scroll-container {
-            overflow-y: auto;
-            max-height: calc(100vh - 200px);
-        }
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
 
-        ::-webkit-scrollbar {
-            width: 5px;
-        }
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+    }
 
-        ::-webkit-scrollbar-thumb {
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 5px;
-        }
+    ::-webkit-scrollbar-track {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
 
-        ::-webkit-scrollbar-track {
-            background-color: rgba(0, 0, 0, 0.1);
-        }
+    .right {
+        flex: 1;
+        padding: 20px 0;
+    }
 
+    .message {
+        width: 100%;
+        border-bottom: 1px solid rgba(0, 0, 0, .1);
+        background-color: #252525;
+        display: flex;
+        align-items: center;
+        padding: 24px 0;
+    }
 
-        .right {
-            flex: 1;
-            padding: 20px 0 20px 0;
-        }
+    .message:nth-child(even) {
+        background-color: #292929;
+    }
 
-        .message {
-            width: 100%;
-            border-bottom: 1px solid rgba(0, 0, 0, .1);
-            background-color: #fff;
-            display: flex;
-            align-items: center;
-            padding: 24px 0 24px 0;
-        }
+    .message .message-content {
+        flex: 1;
+        max-width: 765px;
+        white-space: pre-wrap;
+        margin-left: auto;
+        color: white;
+    }
 
-        .message:nth-child(even) {
-            background-color: rgb(247, 247, 248);
-        }
+    .message .message-content:nth-child(even) {
+        flex: 1;
+        max-width: 765px;
+        white-space: pre-wrap;
+        margin-left: auto;
+    }
 
-        .message .message-content {
-            flex: 1;
-            max-width: 765px;
-            white-space: pre-wrap;
-            margin-left: auto;
-        }
+    .message .message-content p {
+        margin: 0;
+    }
 
-        .message .message-content:nth-child(even) {
-            flex: 1;
-            max-width: 765px;
-            white-space: pre-wrap;
-            margin-left: auto;
-        }
+    .message .message-checkbox {
+        margin-right: auto;
+    }
 
-        .message .message-content p {
-            margin: 0;
-        }
+    .prompt {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        max-width: 765px;
+        margin-top: 70px;
+        margin-right: auto;
+        margin-left: auto - 100;
+        padding-top: 24px;
+    }
 
-        .message .message-checkbox {
-            margin-right: auto;
-        }
+    .prompt #input {
+        flex: 1;
+    }
 
-        .prompt {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            max-width: 765px;
-            margin-right: auto;
-            margin-left: auto;
-            padding-top: 24px;
-        }
+    #send-request-button {
+        background-color: #4285f4;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-        .prompt #input {
-            flex: 1;
-        }
+    .button {
+        margin-left: 24px;
+        color: #fff;
+        background-color: darkslategrey;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-        #send-request-button {
-            background-color: rgb(66, 133, 244);
-        }
+    .button[disabled] {
+        background-color: darkslategrey;
+        cursor: not-allowed;
+    }
 
+    .clickable:hover {
+        opacity: 0.8;
+        box-shadow: 0 0 3px 3px rgba(0, 128, 255, 0.2);
+    }
 
-        .button {
-            margin-left: 24px;
-            color: #fff;
-            background-color: gray;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    .clickable:active {
+        opacity: 0.6;
+    }
 
-        .button[disabled] {
-            background-color: rgb(200, 200, 200);
-            cursor: not-allowed;
-        }
+    .icon {
+        display: inline-block;
+        height: 40px;
+        width: 40px;
+        font-size: 150%;
+        padding: 0;
+    }
 
-        .clickable:hover {
-            opacity: 0.8;
-            box-shadow: 0 0 3px 3px rgba(0, 128, 255, 0.2);
-        }
+    .icon:not(:first-of-type) {
+        margin-left: 12px;
+    }
 
-        .clickable:active {
-            opacity: 0.6;
-        }
+    #properties-panel {
+        max-width: 768px;
+        margin-right: auto;
+        margin-left: 10px;
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: wrap;
+    }
 
-        .icon {
-            display: inline-block;
-            height: 40px;
-            width: 40px;
-            font-size: 150%;
-            /*margin: 0;*/
-            padding: 0;
-        }
+    #properties-panel > div {
+        color: white;
+        margin-right: 20px;
+        margin-bottom: 10px;
+    }
 
-        .icon:not(:first-of-type) {
-            margin-left: 12px;
-        }
+    #properties-panel.hidden {
+        display: none;
+    }
 
+    #welcome-panel {
+        max-width: 589px;
+        margin-right: auto;
+        margin-left: auto - 100;
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #fffe;
+        padding: 15px;
+        background-color: darkslategray;
+        border-radius: 20px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
 
-        #properties-panel {
-            max-width: 768px;
-            margin-right: auto;
-            margin-left: auto;
-            margin-top: 12px;
-            display: flex;
-            flex-wrap: wrap;
-        }
+    #welcome-panel.hidden {
+        display: none;
+    }
 
-        #properties-panel > div {
-            margin-right: 20px;
-            margin-bottom: 10px;
-        }
+    #welcome-panel h1 {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 24px;
+    }
 
-        #properties-panel.hidden {
-            display: none;
-        }
+    #welcome-panel h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 32px;
+        margin-bottom: 16px;
+    }
 
-        #welcome-panel {
-            max-width: 768px;
-            margin-right: auto;
-            margin-left: auto;
-            font-family: 'Roboto', sans-serif;
-            font-size: 16px;
-            line-height: 1.5;
-            color: #333;
-            padding: 20px;
-            background-color: #f5f5f5;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
+    #welcome-panel ul {
+        margin-left: 5px;
+        list-style-type: disc;
+    }
 
-        #welcome-panel.hidden {
-            display: none;
-        }
+    #welcome-panel li {
+        margin-bottom: 8px;
+    }
 
+    .code {
+        background-color: #000;
+        color: #fff;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #fff;
+        border-radius: 5px;
+    }
 
-        #welcome-panel h1 {
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 24px;
-        }
+    .syntax-bracket {
+        color: blue;
+    }
 
-        #welcome-panel h2 {
-            font-size: 24px;
-            font-weight: bold;
-            margin-top: 32px;
-            margin-bottom: 16px;
-        }
+    .syntax-quote {
+        color: green;
+    }
 
-        #welcome-panel ul {
-            margin-left: 24px;
-            list-style-type: disc;
-        }
+    .syntax-operator {
+        color: red;
+    }
 
-        #welcome-panel li {
-            margin-bottom: 8px;
-        }
-
-        .code {
-            background-color: #000000;
-            color: #ffffff;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ffffff;
-            border-radius: 5px;
-        }
-
-        .syntax-bracket {
-            color: blue;
-        }
-
-        .syntax-quote {
-            color: green;
-        }
-
-        .syntax-operator {
-            color: red;
-        }
-
-        .syntax-symbol {
-            color: purple;
-        }
-
-
-    </style>
+    .syntax-symbol {
+        color: purple;
+    }
+</style>
 </head>
 <body>
 
@@ -347,14 +348,13 @@
 </div>
 <div class="right">
     <div id="welcome-panel">
-        <h1>Welcome to privateGPTpp</h1>
-        <p>Did you know that you can now use the power of GPT to query private documents on your local server.</p>
+        <h1>Welcome to the Cloud Tutor</h1>
+        <p>Ask any questions related to INF-2220: Cloud and Big Data</p>
         <h2>Main Features:</h2>
         <ul>
-            <li>Upload your private documents to run queries on them</li>
-            <li>Get relevant sources from the document</li>
-            <li>The uploaded documents are not stored on the server</li>
-            <li>Use any model of your choice
+            <li>Prepare for the INF-2220 Exam with the help of AI</li>
+            <li>Get relevant Multiple Choice Questions relating to the Big data and Cloud!</li>
+            <li>Choose between TWO whole language models!
             </li>
         </ul>
     </div>
