@@ -17,17 +17,12 @@ The entire framework is divided into the frontend and the backend architectures.
 4. This should add your host to the list of available servers. Steps 1-3 are only a first time requirement.
 5. Now press F1, click on "Connect to host" and you should see your host, namely "vs-c2.cs.uit.no". You will be prompted to type your password.
 6. After typing your password, a new window shall open. Open a new terminal in the new window(which is basically the giving you access to the server) from the terminal tab above.
-7. Enter the following code in the bash terminal: ```docker run --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 --rm -it -v $HOME/data:/data -p <port number>:<port number>/tcp nvcr.io/nvidia/pytorch:23.07-py3```<br>
+7. Enter the following code in the bash terminal: ```docker run --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 --rm -it -v $HOME/data:/data -p <port number>:<port number>/tcp konramberg/privategptpp:V1.1```<br>
 The port number can be anything from 1-65535.
 8. This will download the docker image onto your server. This will take some time.
 9. Please make sure to remember your port number as you will require it to run the application later.
-10. Navigate into the "data" folder. Now you can clone this repository into your folder using ```git clone https://github.com/NirwanUiT/privateGPTpp.git```
-11. Change directory into "privateGPTpp" using ```cd privateGPTpp```
-12. Install the packages required by running ```pip install -r requirements.txt``` in the terminal.
-13. Additionally run, ```pip install llama-cpp-python==0.1.65 --force-reinstall --upgrade --no-cache-dir```
-14. Next run ```curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash```
-15. And then ```apt-get install git-lfs```
-16. After the image is downloaded, you will find yourself within the image environment. This is your working environment. If you make any changes to the libraries installed in the environment, make sure to commit the changes to the docker image. This can be done by: ```docker commit <container id> <your_image_name>```
+10. Navigate into the "data" folder. Now you can clone this repository into your folder using ```git clone https://github.com/Oyvindyt/Private2220_assignment2.git```
+11. Change directory into "Private2220_assignment2" using ```cd Private2220_assignment2```
 17. Run the following commands<br>
    ```mkdir models```<br>
    ```cd models```<br>
@@ -35,9 +30,12 @@ The port number can be anything from 1-65535.
    ```wget https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGML/resolve/main/llama-2-7b-chat.ggmlv3.q4_0.bin```<br>
    This downloads the LlamaCpp and GPT4All models into your model directory.
 18. Go back to the parent directory by ```cd ..```
-19. Further change directory into "deploy-llm-project" by ```cd deploy-llm-project```
-20. Open ```python app.py```. In the last line, change the port number to the one you specified while running the docker container.<br>
+19. Run the following command ```mkdir db``
+20. Further change directory into "deploy-llm-project" by ```cd deploy-llm-project```
+21. Open ```python app.py```. In the last line, change the port number to the one you specified while running the docker container.<br>
 ```app.run(port=<port number>, host='0.0.0.0', debug=True)```.
+22. Before asking a question, upload the combinepdf.pdf
+23. You can now ask for the cloud tutor a question or get a multiple choice question relating to a term.
 
 ## Backend
 
