@@ -270,9 +270,14 @@ def call_model(query, model_type, questiontype, hide_source):
     # Get the answer from the chain
     start = time.time()
     
-    res = qa(querywithprompt)
-    if questiontype == "mchoice":
-        res = qa(xChoiceprompt)
+    match questiontype:
+        case "question":
+            res = qa(querywithprompt)
+        case "mchoice":
+            res = qa(xChoiceprompt)
+        case _ :
+            print("No question type found")
+            
     answer, docs = res['result'], [] if hide_source else res['source_documents']
     end = time.time()
 
