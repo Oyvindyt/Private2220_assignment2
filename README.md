@@ -35,7 +35,7 @@ The port number can be anything from 1-65535.
 21. Open ```python app.py```. In the last line, change the port number to the one you specified while running the docker container.<br>
 ```app.run(port=<port number>, host='0.0.0.0', debug=True)```.
 22. Before asking a question, upload the combinepdf.pdf
-23. You can now ask for the cloud tutor a question or get a multiple choice question relating to a term.
+23. You can now ask the cloud tutor a question or get a multiple choice question relating to a term.
 
 
 
