@@ -236,13 +236,25 @@ def call_model(query, model_type, questiontype, hide_source):
     xChoiceprompt = """I want you to generate five MULTIPLE CHOICE QUESTIONS based on the TOPIC specified by the user. 
 
     The MULTIPLE CHOICE QUESTIONS should have three possible answers, a, b and c. One of the answers should be correct, 
-    and two should be incorrect. It should be random which answer, a, b or c, should be the correct answer.
+    and two should be incorrect. It should be random which answer, a, b or c, should be the correct answer. 
     
     The difficulty of the MULTIPLE CHOICE QUESTIONS should be easy, medium and hard. 
 
     TOPIC:
     """ + query + """
     MULTIPLE CHOICE QUESTIONS: 
+    """
+    
+    questionGeneration = """I want you to generate a four QUESTIONS based on the topic specified by the user.
+
+    The QUESTIONS should be relevant to the topic, and should be relevant to the course of INF-2200.
+    
+    The difficulty of the QUESTIONS should be easy, medium, and hard. You should not reply with any answers to the questions, only QUESTIONS.
+
+    TOPIC:
+    """ + query + """
+    
+    QUESTIONS
     """
 
     print(f"Ingestion complete! You can now run privateGPT.py to query your documents")
@@ -275,6 +287,8 @@ def call_model(query, model_type, questiontype, hide_source):
             res = qa(querywithprompt)
         case "mchoice":
             res = qa(xChoiceprompt)
+        case "questiongeneration":
+            res = qa(questionGeneration)
         case _ :
             print("No question type found")
             
