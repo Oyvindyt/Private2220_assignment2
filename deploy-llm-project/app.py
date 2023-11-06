@@ -235,8 +235,9 @@ def call_model(query, model_type, questiontype, hide_source):
 
     xChoiceprompt = """I want you to generate five MULTIPLE CHOICE QUESTIONS based on the TOPIC specified by the user. 
 
-    The MULTIPLE CHOICE QUESTIONS should have three possible answers, a, b and c. One of the answers should be correct, 
-    and two should be incorrect. It should be random which answer, a, b or c, should be the correct answer. 
+    The MULTIPLE CHOICE QUESTIONS should have three possible answers, a, b and c. Decide first what the correct answer is, 
+    then make up two distractors (which are incorrect answers to the question). Assign the correct answer to a random 
+    letter, a, b or c, and the two distractors to the remaining letters.
     
     The difficulty of the MULTIPLE CHOICE QUESTIONS should be easy, medium and hard. 
 
