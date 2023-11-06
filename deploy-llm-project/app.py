@@ -259,21 +259,6 @@ def call_model(query, model_type, questiontype, hide_source):
         case "GPT4All":
             #llm = GPT4All(model=model_path, max_tokens=model_n_ctx, backend='gptj', n_batch=model_n_batch, callbacks=callbacks, verbose=False)
             llm = GPT4All(model="/data/Private2220_assignment2/models/ggml-gpt4all-j-v1.3-groovy.bin", backend='gptj', verbose=False)
-        case "MedLlama":
-            llm = HuggingFacePipeline.from_model_id(model_id='/data/Private2220_assignment2/models/medllama', task="text-generation", device=1,
-                                        model_kwargs={"trust_remote_code": True, "torch_dtype": "auto", "max_length":model_n_ctx})
-        case "phi":
-            llm = HuggingFacePipeline.from_model_id(model_id='/data/Private2220_assignment2/models/phi-1_5',task="text-generation", 
-                                        model_kwargs={"trust_remote_code": True, "torch_dtype": "auto", "max_length":model_n_ctx})
-        case "codegeex2":
-            llm = HuggingFacePipeline.from_model_id(model_id='/data/Private2220_assignment2/models/codegeex2-6b', task="text-generation", device=1,
-                                        model_kwargs={"trust_remote_code": True, "torch_dtype": "auto", "max_length":model_n_ctx})
-        case "codellama":
-            llm = HuggingFacePipeline.from_model_id(model_id='/data/Private2220_assignment2/models/CodeLlama-7b-hf', task="text-generation", device=1,
-                                        model_kwargs={"trust_remote_code": True, "torch_dtype": "auto", "max_length":model_n_ctx})
-        case "vicuna":
-            llm = HuggingFacePipeline.from_model_id(model_id='/data/Private2220_assignment2/models/vicuna-7b-v1.5', task="text-generation", device=1,
-                                        model_kwargs={"trust_remote_code": True, "torch_dtype": "auto", "max_length":model_n_ctx})
         case _default:
             # raise exception if model_type is not supported
             raise Exception(f"Model type {model_type} is not supported. Please choose one of the following: LlamaCpp, GPT4All")
