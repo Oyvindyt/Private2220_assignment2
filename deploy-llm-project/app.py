@@ -269,7 +269,7 @@ def call_model(query, model_type, questiontype, hide_source):
 
     # Get the answer from the chain
     start = time.time()
-    
+
     match questiontype:
         case "question":
             res = qa(querywithprompt)
