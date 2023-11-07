@@ -30,7 +30,7 @@ The port number can be anything from 1-65535.
    ```wget https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGML/resolve/main/llama-2-7b-chat.ggmlv3.q4_0.bin```<br>
    This downloads the LlamaCpp and GPT4All models into your model directory.
 18. Go back to the parent directory by ```cd ..```
-19. Run the following command ```mkdir db``
+19. Run the following command ```mkdir db```
 20. Further change directory into "deploy-llm-project" by ```cd deploy-llm-project```
 21. Open ```python app.py```. In the last line, change the port number to the one you specified while running the docker container.<br>
 ```app.run(port=<port number>, host='0.0.0.0', debug=True)```.
