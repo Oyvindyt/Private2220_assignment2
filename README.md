@@ -1,4 +1,4 @@
-# privateGPT++
+# ExamGPT
 A repository that builds on the original privateGPT repository. Includes a functional webapp and a few other working models.
 
 privateGPT++ is built on the repository created and maintained by imartinez. You can find the link to the original repository here: https://github.com/imartinez/privateGPT
@@ -9,7 +9,12 @@ Additionally we have introduced a frontend that allows you to host a simple weba
 
 The entire framework is divided into the frontend and the backend architectures. We shall go into them briefly in the following sections.
 
-## Running the Program
+## Installing and running with dockerfile (the easy way)
+1. Build the docker image with the provided dockerfile (`docker build dockerfile`)
+2. Run the container with the following command: `docker run --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 --rm -it -p 4000:4000/tcp (IMAGE_TAG) python app.py`
+**NOTE**: this way of running the application does not mount /data and is therefore fully contained in the container. It also automatically runs the application on start.
+
+## Running the Program (the hard way)
 
 1. Open Visual Studio Code and connect to the server. For this, you need to install a few extensions. a) Remote-SSH b) Remote Explorer. After they are installed, press F1 and you will need to enter the details provided to you.
 2. At first you will be prompted to enter your user id which should be in the form: ```ssh <host name>@vs-c2.cs.uit.no```
