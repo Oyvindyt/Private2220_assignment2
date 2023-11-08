@@ -216,6 +216,7 @@ def call_model(query, model_type, questiontype, hide_source):
     embeddings = HuggingFaceEmbeddings(model_name=embeddings_model_name)
     
     db = Chroma(persist_directory=persist_directory, embedding_function=embeddings, client_settings=CHROMA_SETTINGS)
+    # From https://github.com/steamship-packages/ask-my-course/blob/main/prompts.py fetched 04.11.2023
     querywithprompt = """I want you to ANSWER a QUESTION based on the following pieces of CONTEXT. 
 
         If you don't know the answer, just say that you don't know, don't try to make up an answer.
